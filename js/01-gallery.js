@@ -1,13 +1,11 @@
 // Виконуй це завдання у файлах 01-gallery.html і 01-gallery.js. Розбий його на декілька підзавдань:
 
-// Створення і рендер розмітки на підставі масиву даних galleryItems і наданого шаблону елемента галереї.
-// Реалізація делегування на ul.gallery 
-// і отримання url великого зображення.
-// Підключення скрипту і стилів бібліотеки модального вікна basicLightbox. 
+// 1.Створення і рендер розмітки на підставі масиву даних galleryItems і наданого шаблону елемента галереї.
+// 2.Реалізація делегування на ul.gallery і отримання url великого зображення.
+// 3.Підключення скрипту і стилів бібліотеки модального вікна basicLightbox. 
 // Використовуй CDN сервіс jsdelivr і додай у проект посилання на мініфіковані(.min) файли бібліотеки.
-// Відкриття модального вікна по кліку на елементі галереї. 
-// Для цього ознайомся з документацією і прикладами.
-// Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям. 
+// 4.Відкриття модального вікна по кліку на елементі галереї. Для цього ознайомся з документацією і прикладами.
+// 5.Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям. 
 // Використовуй готову розмітку модального вікна із зображенням з прикладів бібліотеки basicLightbox.
 
 
@@ -32,25 +30,20 @@ function createMarkup(arr) {
 }
 
 container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
-container.addEventListener('click', handlerProductClick);
+container.addEventListener('click', handlerGalleryClick);
 
 
-function handlerProductClick(evt) {
-  // console.log(evt.key);
-  // console.log(evt.code);
+function handlerGalleryClick(evt) {
   evt.preventDefault();
 
   if (evt.target === evt.currentTarget) {
 
     return
   }
+  
   const sourse = evt.target.dataset.source;
-  // console.log(evt.target.dataset);
-  // console.log(sourse);
-
-  const instance = basicLightbox.create(`
-    <img src="${sourse}" >
-`)
+  
+  const instance = basicLightbox.create(`<img src="${sourse}" width="800" height="600" >`)
   instance.show();
 
   container.addEventListener('keydown', evt => {
@@ -60,7 +53,19 @@ function handlerProductClick(evt) {
     }
   });
 }
+   
+function onModalClose() {
+  window.removeEventListener('keydown', onEscClick);
 
-
+  const instance = basicLightbox.create(
+    `<img src="${imgOriginalEl}}">`, {
+    onShow: (instance) => {
+      instance.show();
+    },
+    onClose: (instance) => {
+      instance.close();
+    },
+  });
+}
 
 
